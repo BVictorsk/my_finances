@@ -1,10 +1,40 @@
 import React from 'react';
-import { Container } from './styles'
+import logoImg from '../../assets/logo.svg'
+import { Container, Header, LogoImg, MenuContainer, MenuItemLink, Title } from './styles'
+import { MdSpaceDashboard, MdOutlineLogout } from "react-icons/md";
+import { GiReceiveMoney, GiExpense } from "react-icons/gi";
 
 const Aside: React.FC = () => {
     return (    
         <Container>
-            <h1>Aside</h1>
+            <Header>
+                <LogoImg src={logoImg} alt="My fanances logo" />
+                <Title>Minhas finanças</Title>
+            </Header>
+
+            <MenuContainer>
+
+                <MenuItemLink href="#">
+                    <MdSpaceDashboard />
+                    Dashboard
+                </MenuItemLink>
+
+                <MenuItemLink href="#">
+                    <GiReceiveMoney />
+                    Entradas
+                </MenuItemLink>
+
+                <MenuItemLink href="#">
+                    <GiExpense />
+                    Saídas
+                </MenuItemLink>
+
+                <MenuItemLink href="#">
+                    <MdOutlineLogout />
+                    Sair
+                </MenuItemLink>
+
+            </MenuContainer>
         </Container>
     );
   }
