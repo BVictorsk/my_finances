@@ -33,7 +33,7 @@ export const MenuItemLink = styled.a `
     display: flex;
     align-items: center;
 
-    color: ${props => props.theme.colors.info};
+    color: ${props => props.theme.colors.white};
     text-decoration: none;
 
     margin: 7px 0;
