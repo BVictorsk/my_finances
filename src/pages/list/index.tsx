@@ -1,7 +1,8 @@
 import React from 'react'
-import { Container } from './styles'
+import { Container, Content } from './styles'
 import Header from '../../components/header'
 import SelectInput from '../../components/selectInput';
+import HistoryFinancesCard from '../../components/historyFinancesCard';
 
 const List: React.FC = () => {
     const options = [
@@ -14,6 +15,66 @@ const List: React.FC = () => {
             <Header title="List">
                 <SelectInput options={options} />
             </Header>
+
+            <Content>
+                <HistoryFinancesCard 
+                cardColor="#110e36"
+                tagColor="#e44c4f"
+                title="Conta"
+                subtitle="10/10/2022"
+                amount="R$ 130,00"
+                />
+                <HistoryFinancesCard 
+                cardColor="#110e36"
+                tagColor="#e44c4f"
+                title="Conta"
+                subtitle="10/10/2022"
+                amount="R$ 130,00"
+                />
+                <HistoryFinancesCard 
+                cardColor="#110e36"
+                tagColor="#e44c4f"
+                title="Conta"
+                subtitle="10/10/2022"
+                amount="R$ 130,00"
+                />
+                <HistoryFinancesCard 
+                cardColor="#110e36"
+                tagColor="#e44c4f"
+                title="Conta"
+                subtitle="10/10/2022"
+                amount="R$ 130,00"
+                />
+                <HistoryFinancesCard 
+                cardColor="#110e36"
+                tagColor="#e44c4f"
+                title="Conta"
+                subtitle="10/10/2022"
+                amount="R$ 130,00"
+                />
+                <HistoryFinancesCard 
+                cardColor="#110e36"
+                tagColor="#e44c4f"
+                title="Conta"
+                subtitle="10/10/2022"
+                amount="R$ 130,00"
+                />
+                <HistoryFinancesCard 
+                cardColor="#110e36"
+                tagColor="#e44c4f"
+                title="Conta"
+                subtitle="10/10/2022"
+                amount="R$ 130,00"
+                />
+                <HistoryFinancesCard 
+                cardColor="#110e36"
+                tagColor="#e44c4f"
+                title="Conta"
+                subtitle="10/10/2022"
+                amount="R$ 130,00"
+                />
+            </Content>
+
         </Container>
     );
 }
