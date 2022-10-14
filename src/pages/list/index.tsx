@@ -1,10 +1,17 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Container, Content, Filters } from './styles'
 import Header from '../../components/header'
 import SelectInput from '../../components/selectInput';
 import HistoryFinancesCard from '../../components/historyFinancesCard';
+import {useParams} from 'react-router-dom';
 
 const List: React.FC = () => {
+    const { type } = useParams();
+
+    const title = useMemo(() => {
+        return type === 'income' ? 'Entradas' : 'Saídas'
+    }, [type]);
+
     const months = [
         {value: 1 , label: 'Janeiro'},
         {value: 2 , label: 'Fevereiro'},
@@ -19,7 +26,7 @@ const List: React.FC = () => {
     
     return (    
         <Container>
-            <Header title="List">
+            <Header title={title}>
                 <SelectInput options={months} />
                 <SelectInput options={years} />
             </Header>

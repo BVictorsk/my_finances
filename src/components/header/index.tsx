@@ -1,5 +1,4 @@
 import React from 'react';
-import SelectInput from '../selectInput';
 import { Container, TitleContainer, Controllers } from './styles'
 
 //header interface content
