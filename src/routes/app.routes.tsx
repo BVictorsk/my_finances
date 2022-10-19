@@ -6,10 +6,10 @@ import Layout from '../components/layout'
 
 const AppRoutes: React.FC = () => (
     <Layout>
-      <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/list/:type" element={<List />} />
-      </Routes>
+        <Routes>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/list/:type" element={<List />} />
+        </Routes>
     </Layout>
   );
   export default AppRoutes;

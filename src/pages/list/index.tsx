@@ -1,16 +1,37 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { Container, Content, Filters } from './styles'
+import {useParams} from 'react-router-dom';
 import Header from '../../components/header'
 import SelectInput from '../../components/selectInput';
 import HistoryFinancesCard from '../../components/historyFinancesCard';
-import {useParams} from 'react-router-dom';
+import gains from '../../repositories/gains'
+import expenses from '../../repositories/expenses'
+
+interface IData {
+    id: string;
+    description: string;
+    amountFormatted: string;
+    frequency: string;
+    dataFormatted: string;
+    tagColor: string;
+}
 
 const List: React.FC = () => {
+    const [data, setData] = useState<IData[]>([]);
+
     const { type } = useParams();
 
     const title = useMemo(() => {
         return type === 'income' ? 'Entradas' : 'Saídas'
     }, [type]);
+
+    // const lineColor = useMemo(() => {
+    //     return type === 'income' ? '#FA0501' : '#4e41f0'
+    // }, [type]);
+
+    const listData = useMemo (() => {
+        return type === 'income' ? gains : expenses;
+    }, [type])
 
     const months = [
         {value: 1 , label: 'Janeiro'},
@@ -24,6 +45,23 @@ const List: React.FC = () => {
         {value: 2020 , label: 2020},
     ]
     
+    useEffect(() => {
+        const response = listData.map(item => {
+            return {
+                id: String(Math.random() * data.length),
+                description: item.description,
+                amountFormatted: item.amount,
+                frequency: item.frequency,
+                dataFormatted: item.date,
+                tagColor: item.frequency === 'recorrente' ? '#4e41f0' : '#FA0501',
+            }
+        })
+        
+        setData(response)
+    }, [])
+    
+    
+
     return (    
         <Container>
             <Header title={title}>
@@ -33,23 +71,28 @@ const List: React.FC = () => {
 
             <Filters>
                 <button 
-                type="button"
-                className="tag-filter tag-filter-recurrent"
-                >Recorrentes</button>
-                <button 
-                type="button"
-                className="tag-filter tag-filter-eventual"
+                    type="button"
+                    className="tag-filter tag-filter-eventual"
                 >Eventuais</button>
+                <button 
+                    type="button"
+                    className="tag-filter tag-filter-recurrent"
+                >Recorrentes</button>
             </Filters>
 
             <Content>
-                <HistoryFinancesCard 
-                tagColor="#e44c4f"
-                title="Conta"
-                subtitle="10/10/2022"
-                amount="R$ 130,00"
-                />
-                
+                {              
+                    data.map(item => (
+                        <HistoryFinancesCard 
+                        key={item.id}
+                        tagColor={item.tagColor}
+                        title={item.description}
+                        subtitle={item.dataFormatted}
+                        amount={item.amountFormatted}
+                        />
+                    ))  
+
+                }
             </Content>
 
         </Container>
