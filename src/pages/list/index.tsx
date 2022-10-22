@@ -20,16 +20,14 @@ interface IData {
 
 const List: React.FC = () => {
     const [data, setData] = useState<IData[]>([]);
+    const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1)); 
+    const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear())); 
 
     const { type } = useParams();
 
     const title = useMemo(() => {
         return type === 'income' ? 'Entradas' : 'Saídas'
     }, [type]);
-
-    // const lineColor = useMemo(() => {
-    //     return type === 'income' ? '#FA0501' : '#4e41f0'
-    // }, [type]);
 
     const listData = useMemo (() => {
         return type === 'income' ? gains : expenses;
@@ -48,9 +46,18 @@ const List: React.FC = () => {
     ]
     
     useEffect(() => {
-        const response = listData.map(item => {
+        const filteredData = listData.filter(item => {
+        const date = new Date(item.date);
+        const month = String(date.getMonth() + 1);
+        const year = String(date.getFullYear());
+
+            return month === monthSelected && year === yearSelected;
+        });
+
+        const formattedDate = filteredData.map(item => {
+
             return {
-                id: String(Math.random() * data.length),
+                id: String(new Date().getTime()) + item.amount,
                 description: item.description,
                 amountFormatted: formatCurrency(Number(item.amount)),
                 frequency: item.frequency,
@@ -59,16 +66,22 @@ const List: React.FC = () => {
             }
         })
         
-        setData(response)
-    }, [])
+        setData(formattedDate)
+    }, [listData, monthSelected, yearSelected, data.length])
     
     
 
     return (    
         <Container>
             <Header title={title}>
-                <SelectInput options={months} />
-                <SelectInput options={years} />
+                <SelectInput 
+                options={months} 
+                onChange={e => setMonthSelected(e.target.value)} 
+                defaultValue={monthSelected} />
+                <SelectInput 
+                options={years} 
+                onChange={e => setYearSelected(e.target.value)} 
+                defaultValue={yearSelected}  />
             </Header>
 
             <Filters>
