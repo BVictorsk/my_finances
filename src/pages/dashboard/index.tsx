@@ -7,6 +7,9 @@ import SelectInput from '../../components/selectInput'
 import expenses from '../../repositories/expenses'
 import gains from '../../repositories/gains'
 import listOfMonths from '../../utils/months'
+import CardStatus from '../../components/cardStatus'
+import happyImg from '../../assets/happy.svg'
+import sadImg from '../../assets/sad.svg'
 
 const Dashboard: React.FC = () => {
     const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1); 
@@ -105,6 +108,14 @@ const Dashboard: React.FC = () => {
                     icon="arrowDown"
                     color="#FA0501"
                  />
+
+                <CardStatus
+                    title="Muito bem!"
+                    description="Status da carteira: positivo"
+                    footerText="Continue assim! considere investir seu saldo."
+                    icon={happyImg}
+                />
+
             </Content>
 
         </Container>
