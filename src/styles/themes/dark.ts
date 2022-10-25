@@ -12,7 +12,7 @@ export default {
         gray: '#bfbfbf',
 
         success: '#4e41f0',
-        info: '#56E521',
+        info: '#0ED004',
         warning: '#FA0501',
 
     }

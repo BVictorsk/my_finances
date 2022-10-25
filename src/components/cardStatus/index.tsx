@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container } from './styles';
-import happyImg from '../../assets/happy.svg'
 
 interface ICardStatusProps {
     title: string;

@@ -8,6 +8,7 @@ import expenses from '../../repositories/expenses'
 import gains from '../../repositories/gains'
 import listOfMonths from '../../utils/months'
 import CardStatus from '../../components/cardStatus'
+import PieChartComponent from '../../components/pieChart'
 import happyImg from '../../assets/happy.svg'
 import sadImg from '../../assets/sad.svg'
 import grinningImg from '../../assets/grinning.svg'
@@ -182,6 +183,8 @@ const Dashboard: React.FC = () => {
                     footerText={message.footerText}
                     icon={message.icon}
                 />
+
+                <PieChartComponent />
 
             </Content>
 
