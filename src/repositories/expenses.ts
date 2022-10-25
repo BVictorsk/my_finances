@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 export default [
   {"description":"Energia elétrica",      "amount":"150.55","type":"saída","frequency":"recorrente","date":"2022-01-10"},
   {"description":"Água",                  "amount":"75.55", "type":"saída","frequency":"recorrente","date":"2022-01-15"},
@@ -47,5 +48,7 @@ export default [
   {"description":"Plano de Saúde",        "amount":"300.00","type":"saída","frequency":"recorrente","date":"2020-07-23"},
   {"description":"Compras do mês",        "amount":"700.00","type":"saída","frequency":"recorrente","date":"2020-07-25"},
   {"description":"Cafeteira",             "amount":"250.00","type":"saída","frequency":"eventual",  "date":"2020-07-26"},
-  {"description":"Pizza",                 "amount":"60.00", "type":"saída","frequency":"eventual",  "date":"2020-07-19"}
+  {"description":"Pizza",                 "amount":"260.00", "type":"saída","frequency":"eventual",  "date":"2020-07-19"},
+  {"description":"Rodizio Japonês",             "amount":"350.00","type":"saída","frequency":"eventual",  "date":"2020-07-26"},
+  {"description":"Outback",                 "amount":"260.00", "type":"saída","frequency":"eventual",  "date":"2020-07-19"},
 ]

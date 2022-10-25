@@ -20,11 +20,10 @@ const CardStatus: React.FC<ICardStatusProps> = ({
             <header>
                 <h1>
                     {title}
-                    <img src={happyImg} alt={title} />
+                    <img src={icon} alt={title} />
                 </h1>
                 <p>{description}</p>
             </header>
-            
             <footer>{footerText}</footer>
        </Container>
     );

@@ -10,16 +10,11 @@ import listOfMonths from '../../utils/months'
 import CardStatus from '../../components/cardStatus'
 import happyImg from '../../assets/happy.svg'
 import sadImg from '../../assets/sad.svg'
+import grinningImg from '../../assets/grinning.svg'
 
 const Dashboard: React.FC = () => {
     const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1); 
     const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear()); 
-
-    const options = [
-        { value: 'Brian', label: 'Brian' },
-        { value: 'Brian', label: 'Brian' }
-    ];
-
     
     const months = useMemo(() => {
         return listOfMonths.map(( month, index ) => {
@@ -30,6 +25,78 @@ const Dashboard: React.FC = () => {
         })
 
     }, []);
+
+    const totalExpense = useMemo(() => {
+        let total: number = 0;
+
+        expenses.forEach(item => {
+            const date = new Date(item.date);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+
+            if(month === monthSelected && year === yearSelected) {
+                try {
+                    total += Number(item.amount);
+                } catch {
+                    throw new Error('invelid amount! amount must be number')
+                }
+            }
+        });
+
+        return total;
+    }, [monthSelected, yearSelected]);
+
+        const totalGains = useMemo(() => {
+            let total: number = 0;
+    
+            gains.forEach(item => {
+                const date = new Date(item.date);
+                const year = date.getFullYear();
+                const month = date.getMonth() + 1;
+    
+                if(month === monthSelected && year === yearSelected) {
+                    try {
+                        total += Number(item.amount);
+                    } catch {
+                        throw new Error('invalid amount! amount must be number')
+                    }
+                }
+            });
+    
+            return total;
+        }, [monthSelected, yearSelected]);
+
+        const totalBalance = useMemo(() => {
+            return totalGains - totalExpense;
+        }, [totalGains, totalExpense])
+    
+        const message = useMemo(() => {
+            if(totalBalance < 0) {
+                return {
+                    title:"Atenção",
+                    description:"Status da carteira: Negativo",
+                    footerText:"Verifique seus gastos!",
+                    icon: sadImg
+                }
+            } 
+            else if(totalBalance === 0) {
+                return {
+                    title:"Tenha cuidado",
+                    description:"Status da carteira: Neutro",
+                    footerText:"Acompanhe sua carteira mais de perto",
+                    icon: grinningImg
+                }
+            } 
+            else {
+                return {
+                    title:"Parabens!",
+                    description:"Status da carteira: Positivo",
+                    footerText:"Considere investir seu saldo.",
+                    icon: happyImg
+                }
+            }
+    
+        }, [totalBalance])
 
     const years = useMemo(() => {
         let uniqueYears: number[] = [];
@@ -57,7 +124,7 @@ const Dashboard: React.FC = () => {
             const parseMonth = Number(month);
             setMonthSelected(parseMonth);
          }
-         catch(error) {
+         catch {
             throw new Error('invalid month value')
          }
     }
@@ -89,31 +156,31 @@ const Dashboard: React.FC = () => {
             <Content>
                 <WalletCard
                     title="Saldo"
-                    amount={150.00}
+                    amount={totalBalance}
                     footerlabel="Atualizada com base nas entradas/saídas."
                     icon="dollar"
                     color="#4e41f0"
                  />
                 <WalletCard
                     title="Entradas"
-                    amount={1550.00}
+                    amount={totalGains}
                     footerlabel="Atualizada com base nas entradas/saídas."
                     icon="arrowUp"
                     color="#56E521"
                  />
                 <WalletCard
                     title="Saídas"
-                    amount={550.00}
+                    amount={totalExpense}
                     footerlabel="Atualizada com base nas entradas/saídas."
                     icon="arrowDown"
                     color="#FA0501"
                  />
 
                 <CardStatus
-                    title="Muito bem!"
-                    description="Status da carteira: positivo"
-                    footerText="Continue assim! considere investir seu saldo."
-                    icon={happyImg}
+                    title={message.title}
+                    description={message.description}
+                    footerText={message.footerText}
+                    icon={message.icon}
                 />
 
             </Content>
