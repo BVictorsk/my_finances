@@ -36,10 +36,10 @@ export const Legend = styled.li<ILegendProps> `
     > div {
         background-color:${props => props.color};
 
-        width: 30px;
+        width: 60px;
         height: 30px;
 
-        border-radius: 20px;
+        border-radius: 15px;
 
         font-size: 13px;
         line-height: 30px;
@@ -52,7 +52,9 @@ export const Legend = styled.li<ILegendProps> `
 `;
 
 export const SideRight = styled.main `
-
+    display: flex;
+    flex: 1;
+    justify-content: center
 `;
 
 

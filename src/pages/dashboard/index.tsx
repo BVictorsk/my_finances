@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
 
     }, []);
 
-    const totalExpense = useMemo(() => {
+    const totalExpenses = useMemo(() => {
         let total: number = 0;
 
         expenses.forEach(item => {
@@ -47,7 +47,7 @@ const Dashboard: React.FC = () => {
         return total;
     }, [monthSelected, yearSelected]);
 
-        const totalGains = useMemo(() => {
+    const totalGains = useMemo(() => {
             let total: number = 0;
     
             gains.forEach(item => {
@@ -67,11 +67,11 @@ const Dashboard: React.FC = () => {
             return total;
         }, [monthSelected, yearSelected]);
 
-        const totalBalance = useMemo(() => {
-            return totalGains - totalExpense;
-        }, [totalGains, totalExpense])
+    const totalBalance = useMemo(() => {
+            return totalGains - totalExpenses;
+        }, [totalGains, totalExpenses])
     
-        const message = useMemo(() => {
+    const message = useMemo(() => {
             if(totalBalance < 0) {
                 return {
                     title:"Atenção",
@@ -98,6 +98,30 @@ const Dashboard: React.FC = () => {
             }
     
         }, [totalBalance])
+
+    const relationExpenseXGains = useMemo(() => {
+        const total = totalGains + totalExpenses;
+        
+        const percentGains = Number(((totalGains / total) * 100).toFixed(1));
+        const percentExpenses = Number(((totalExpenses / total) * 100).toFixed(1));
+        
+        const data = [
+            {
+                name: 'Entradas',
+                value: totalGains,
+                percent: percentGains ? percentGains : 0,
+                color: '#0ED004',
+            },
+            {
+                name: 'Saídas',
+                value: totalExpenses,
+                percent: percentExpenses ? percentExpenses : 0,
+                color: '#FA0501',
+            },
+        ];
+        
+        return data;
+    }, [totalGains, totalExpenses]);
 
     const years = useMemo(() => {
         let uniqueYears: number[] = [];
@@ -167,11 +191,11 @@ const Dashboard: React.FC = () => {
                     amount={totalGains}
                     footerlabel="Atualizada com base nas entradas/saídas."
                     icon="arrowUp"
-                    color="#56E521"
+                    color="#0ED004"
                  />
                 <WalletCard
                     title="Saídas"
-                    amount={totalExpense}
+                    amount={totalExpenses}
                     footerlabel="Atualizada com base nas entradas/saídas."
                     icon="arrowDown"
                     color="#FA0501"
@@ -184,7 +208,7 @@ const Dashboard: React.FC = () => {
                     icon={message.icon}
                 />
 
-                <PieChartComponent />
+                <PieChartComponent data={relationExpenseXGains}/>
 
             </Content>
 

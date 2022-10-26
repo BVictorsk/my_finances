@@ -2,34 +2,43 @@ import React from 'react';
 import { Container, SideLeft, LegendContainer, Legend, SideRight } from './styles'
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 
+interface IPieChartProps {
+    data: {
+      name: string;
+      value: number;
+      percent: number;
+      color: string;
+    }[];
+  }
 
-const PieChartComponent: React.FC = () => {
+const PieChartComponent: React.FC<IPieChartProps> = ({data}) => {
     return (    
         <Container>
             <SideLeft>
                 <LegendContainer>
-                    <Legend color={"#0ED004"}>
-                        <div>5%</div>
-                        <span>Entradas</span>
-                    </Legend>
-                    <Legend color={"#FA0501"}>
-                        <div>95%</div>
-                        <span>Saídas</span>
-                    </Legend>
+                    {data.map((indicator) => (
+                        <Legend key={indicator.name} color={indicator.color}>
+                            <div>{indicator.percent}%</div>
+                            <span>{indicator.name}</span>
+                        </Legend>
+                    ))}
                 </LegendContainer>
             </SideLeft>
             <SideRight>
-                {/* <ResponsiveContainer>
+                <ResponsiveContainer>
                     <PieChart>
                         <Pie
-                            data={[{amount: 30, percent: 95}]}
-                            labelLine={false}
+                            data={data}
                             dataKey="percent"
                         >
-
+                            {
+                                data.map((indicator) => (
+                                    <Cell key={indicator.name} fill={indicator.color} />
+                                ))
+                            }
                         </Pie>
                     </PieChart>
-                </ResponsiveContainer> */}
+                </ResponsiveContainer>
             </SideRight>
         </Container>
     );
