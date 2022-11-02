@@ -65,12 +65,14 @@ const List: React.FC = () => {
 
             }
         })
+        // eslint-disable-next-line
     }, []);
 
     const handleFrequencyClick = (frequency: string) => {
         const alreadySelected = frequencyFilterSelected.findIndex(item => item === frequency);
 
         if(alreadySelected >= 0){
+            // eslint-disable-next-line
             const filtered = frequencyFilterSelected.filter(item => item != frequency);
             setFrequencyFilterSelected(filtered);
         } else {

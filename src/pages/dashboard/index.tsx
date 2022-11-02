@@ -1,17 +1,21 @@
 import React, { useState, useMemo } from 'react'
 import { Container, Content } from './styles'
 
-import WalletCard from '../../components/walletCard'
-import Header from '../../components/header'
-import SelectInput from '../../components/selectInput'
-import expenses from '../../repositories/expenses'
-import gains from '../../repositories/gains'
-import listOfMonths from '../../utils/months'
-import CardStatus from '../../components/cardStatus'
-import PieChartComponent from '../../components/pieChart'
+import grinningImg from '../../assets/grinning.svg'
 import happyImg from '../../assets/happy.svg'
 import sadImg from '../../assets/sad.svg'
-import grinningImg from '../../assets/grinning.svg'
+
+import CardStatus from '../../components/cardStatus'
+import Header from '../../components/header'
+import HistoryBox from '../../components/historyBox'
+import PieChartComponent from '../../components/pieChart'
+import SelectInput from '../../components/selectInput'
+import WalletCard from '../../components/walletCard'
+
+import expenses from '../../repositories/expenses'
+import gains from '../../repositories/gains'
+
+import listOfMonths from '../../utils/months'
 
 const Dashboard: React.FC = () => {
     const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1); 
@@ -123,6 +127,56 @@ const Dashboard: React.FC = () => {
         return data;
     }, [totalGains, totalExpenses]);
 
+    const historyData = useMemo(() => {
+        return listOfMonths
+          .map((_, month) => {
+            let amountEntry = 0;
+            gains.forEach((gain) => {
+              const date = new Date(gain.date);
+              const gainMonth = date.getMonth();
+              const gainYear = date.getFullYear();
+    
+              if (gainMonth === month && gainYear === yearSelected) {
+                try {
+                  amountEntry += Number(gain.amount);
+                } catch {
+                  throw new Error('amountEntry must be number');
+                }
+              }
+            });
+    
+            let amountOutput = 0;
+            expenses.forEach((expense) => {
+              const date = new Date(expense.date);
+              const expenseMonth = date.getMonth();
+              const expenseYear = date.getFullYear();
+    
+              if (expenseMonth === month && expenseYear === yearSelected) {
+                try {
+                  amountOutput += Number(expense.amount);
+                } catch {
+                  throw new Error('expenseEntry must be number');
+                }
+              }
+            });
+    
+            return {
+              monthNumber: month,
+              month: listOfMonths[month].substr(0, 3),
+              amountEntry,
+              amountOutput,
+            };
+          })
+          .filter((item) => {
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            return (
+              (yearSelected === currentYear && item.monthNumber <= currentMonth) ||
+              yearSelected < currentYear
+            );
+          });
+      }, [yearSelected]);
+
     const years = useMemo(() => {
         let uniqueYears: number[] = [];
 
@@ -210,6 +264,11 @@ const Dashboard: React.FC = () => {
 
                 <PieChartComponent data={relationExpenseXGains}/>
 
+                <HistoryBox
+                    data={historyData}
+                    lineColorAmountEntry="#0ED004"
+                    lineColorAmountOutput="#FA0501"
+                />
             </Content>
 
         </Container>
