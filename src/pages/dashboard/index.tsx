@@ -1,10 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { Container, Content } from './styles'
 
-import grinningImg from '../../assets/grinning.svg'
-import happyImg from '../../assets/happy.svg'
-import sadImg from '../../assets/sad.svg'
-
 import CardStatus from '../../components/cardStatus'
 import Header from '../../components/header'
 import HistoryBox from '../../components/historyBox'
@@ -77,31 +73,35 @@ const Dashboard: React.FC = () => {
         }, [totalGains, totalExpenses])
     
     const message = useMemo(() => {
-            if(totalBalance < 0) {
-                return {
-                    title:"Atenção",
-                    description:"Status da carteira: Negativo",
-                    footerText:"Verifique seus gastos!",
-                    icon: sadImg
-                }
-            } 
-            else if(totalBalance === 0) {
-                return {
-                    title:"Tenha cuidado",
-                    description:"Status da carteira: Neutro",
-                    footerText:"Acompanhe sua carteira mais de perto",
-                    icon: grinningImg
-                }
-            } 
-            else {
-                return {
-                    title:"Parabens!",
-                    description:"Status da carteira: Positivo",
-                    footerText:"Considere investir seu saldo.",
-                    icon: happyImg
-                }
+        if(totalBalance < 0){
+            return {
+                title: "Que triste!",
+                description: "Neste mês, você gastou mais do que deveria.",
+                footerText: "Verifique seus gastos e tente cortar algumas coisas desnecessárias.",
             }
-    
+        }      
+        else if(totalGains === 0 && totalExpenses === 0){
+            return {
+                title: "Ops!",
+                description: "Neste mês, não há registros de entradas ou saídas.",
+                footerText: "Parece que você não fez nenhum registro no mês e ano selecionado.",
+            }
+        }
+        else if(totalBalance === 0){
+            return {
+                title: "Ufaa!",
+                description: "Neste mês, você gastou exatamente o que ganhou.",
+                footerText: "Tenha cuidado. No próximo tente poupar o seu dinheiro.",
+            }
+        }
+        else{
+            return {
+                title: "Muito bem!",
+                description: "Sua carteira está positiva!",
+                footerText: "Continue assim. Considere investir o seu saldo.",
+            }
+        }
+        // eslint-disable-next-line
         }, [totalBalance])
 
     const relationExpenseXGains = useMemo(() => {
@@ -201,17 +201,20 @@ const Dashboard: React.FC = () => {
 
         const total = amountRecurrent + amountEventual;
 
+        const percentRecurrent = Number(((amountRecurrent / total) * 100).toFixed(1));
+        const percentEventual = Number(((amountEventual / total) * 100).toFixed(1));
+
         return [
             {
                 name: 'Recorrentes',
                 amount: amountRecurrent,
-                percent: Number(((amountEventual / total) * 100).toFixed(1)),
+                percent: percentRecurrent ? percentRecurrent : 0,
                 color: "#4e41f0"
             },
             {
                 name: 'Eventuais',
-                amount: amountRecurrent,
-                percent: Number(((amountEventual / total) * 100).toFixed(1)),
+                amount: amountEventual,
+                percent: percentEventual ? percentEventual : 0  ,
                 color: "#FA0501"
             }
         ]
@@ -240,17 +243,20 @@ const Dashboard: React.FC = () => {
 
         const total = amountRecurrent + amountEventual;
 
+        const recurrentPercent = Number(((amountRecurrent / total) * 100).toFixed(1));
+        const eventualPercent = Number(((amountEventual / total) * 100).toFixed(1));
+
         return [
             {
                 name: 'Recorrentes',
                 amount: amountRecurrent,
-                percent: Number(((amountEventual / total) * 100).toFixed(1)),
+                percent: recurrentPercent ? recurrentPercent : 0,
                 color: "#4e41f0"
             },
             {
                 name: 'Eventuais',
-                amount: amountRecurrent,
-                percent: Number(((amountEventual / total) * 100).toFixed(1)),
+                amount: amountEventual,
+                percent: eventualPercent ? eventualPercent : 0,
                 color: "#FA0501"
             }
         ]
@@ -338,7 +344,6 @@ const Dashboard: React.FC = () => {
                     title={message.title}
                     description={message.description}
                     footerText={message.footerText}
-                    icon={message.icon}
                 />
 
                 <PieChartComponent data={relationExpenseXGains}/>

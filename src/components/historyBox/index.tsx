@@ -8,8 +8,6 @@ import {
   Tooltip,
 } from 'recharts';
 
-import formatCurrency from '../../utils/formatCurrency';
-
 import {
   Container,
   ChartContainer,
