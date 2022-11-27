@@ -24,8 +24,8 @@ export const Container = styled.div`
   flex-direction: column;
   background-color: ${(props) => props.theme.colors.tertiary};
   color: ${(props) => props.theme.colors.white};
-  margin: 10px 0;
-  padding: 30px 20px;
+  margin: 5px 0;
+  padding: 10px 10px;
   border-radius: 10px;
   animation: ${animate} 0.5s;
 `;

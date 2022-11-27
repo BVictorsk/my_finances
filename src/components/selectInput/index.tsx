@@ -12,24 +12,22 @@ interface ISelelectInputProps {
     defaultValue?: string | number;
 }
  
-const SelectInput: React.FC<ISelelectInputProps> = ({ options, onChange, defaultValue }) => {
-	return (
-		<Container>
-			<select onChange={onChange} defaultValue={defaultValue}>
-                {
-                    options.map(option => (
-                        <option 
-                            value={option.value}
-                            key={option.value}
-                        >
-                            {option.label}
-                        </option>
-                    ))
-                }
-            </select>
-		</Container>
+const SelectInput: React.FC<ISelelectInputProps> = ({ options, onChange, defaultValue }) =>(
+	<Container>
+		<select onChange={onChange} defaultValue={defaultValue}>
+            {
+                options.map(option => (
+                    <option 
+                        value={option.value}
+                        key={option.value}
+                    >
+                        {option.label}
+                    </option>
+                ))
+            }
+        </select>
+	</Container>
 	)
-}
  
 
 export default SelectInput;

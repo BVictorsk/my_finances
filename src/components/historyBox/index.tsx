@@ -53,7 +53,7 @@ const HistoryBox: React.FC<IHistoryBoxProps> = ({
           data={data}
           margin={{ top: 10, right: 15, left: 15, }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#4e41f0" />
+          <CartesianGrid strokeDasharray="2 2" stroke="#4e41f0" />
           <XAxis dataKey="month" stroke="#4e41f0" />
           <Tooltip/>
           <Line

@@ -7,9 +7,7 @@ interface IHeader {
     children: React.ReactNode;
 }
 
-const Header: React.FC<IHeader> = ({title, children}) => {
-
-    return (    
+const Header: React.FC<IHeader> = ({title, children}) => (    
         <Container>
             <TitleContainer>
                 <h2>{title}</h2>
@@ -21,6 +19,5 @@ const Header: React.FC<IHeader> = ({title, children}) => {
             </Controllers>
         </Container>
     );
-  }
   
   export default Header;
