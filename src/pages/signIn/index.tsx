@@ -1,7 +1,6 @@
 import React from 'react'
-import logoImg from "../../assets/logo.svg"
-
 import Input from '../../components/input';
+import Button from '../../components/button';
 
 import { Container, Logo, Form, FormTitle } from "./style"
 
@@ -9,7 +8,7 @@ const SignIn: React.FC = () => {
     return (    
         <Container>
             <Logo>
-                <h2>My Wallet</h2>
+                <h2>My Finances</h2>
             </Logo>
 
             <Form onSubmit={() => {}}>
@@ -27,7 +26,7 @@ const SignIn: React.FC = () => {
                 />
 
                 
-                <button type="submit">Acessar</button>
+                <Button type="submit">Acessar</Button>
             </Form>
         </Container>
     );
