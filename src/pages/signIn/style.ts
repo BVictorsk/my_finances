@@ -25,10 +25,14 @@ export const Logo = styled.div `
 `;
 
 export const Form = styled.form `
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
 
     padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     border-radius: 10px;
     background-color: ${props => props.theme.colors.tertiary};
